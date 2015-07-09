@@ -30,7 +30,17 @@ public class Painter {
 
     public void paint() {
         List<String> commands = readCommands();
+        boolean commandsAreEmpty = isEmpty(commands);
+        if (commandsAreEmpty) {
+            logger.log(Level.SEVERE, "Commands cannot be empty");
+            return;
+        }
+
         logger.log(Level.INFO, commands.toString());
+    }
+
+    private boolean isEmpty(List commands) {
+        return commands == null || commands.isEmpty();
     }
 
     private List readCommands() {
