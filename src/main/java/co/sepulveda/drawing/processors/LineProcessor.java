@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package co.sepulveda.drawing.processors;
 
 import co.sepulveda.drawing.commands.LineCommand;
@@ -41,9 +36,17 @@ public class LineProcessor {
         }
 
         int y = command.getY1();
+        if (isDataGreaterCanvas(x2, y, canvas)) {
+            return;
+        }
+
         for (int i= x1 - 1; i + 1 <= x2; i++) {
             canvas[y - 1][i] = CHAR;
         }
+    }
+
+    private boolean isDataGreaterCanvas(int x, int y, char[][] canvas) {
+        return x > canvas[0].length || y > canvas.length;
     }
 
     private void processVerticalLine(char[][] canvas, LineCommand command) {
@@ -55,6 +58,10 @@ public class LineProcessor {
         }
 
         int x = command.getX1();
+        if (isDataGreaterCanvas(x, y2, canvas)) {
+            return;
+        }
+
         for (int i= y1 - 1; i + 1 <= y2; i++) {
             canvas[i][x - 1] = CHAR;
         }
