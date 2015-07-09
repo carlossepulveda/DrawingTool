@@ -38,7 +38,7 @@ public class CommandsParserTest {
 
     @Test
     public void shouldParseBucketCommand() {
-        String line = "B 1 2";
+        String line = "B 1 2 o";
         CommandsParser parser = new CommandsParser();
         Command command = parser.parse(line);
         Assert.assertNotNull(command);
@@ -74,7 +74,7 @@ public class CommandsParserTest {
     public void shouldNormalizeString() {
         CommandsParser parser = new CommandsParser();
 
-        String line = "C      1  2   3        2";
+        String line = "C      1   2   ";
         Command command = parser.parse(line);
         Assert.assertNotNull(command);
         Assert.assertEquals(CreateCommand.NAME, command.getName());
