@@ -42,4 +42,28 @@ public class LineProcessorTest {
 
         org.junit.Assert.assertArrayEquals(canvas, expectedCanvas);
     }
+
+    @Test
+    public void shouldFailIsXDataOverflow() {
+        char[][] canvas = new char[4][7];
+        String[] data = new String[] {"L","1", "2", "8", "2"};
+        LineCommand command = LineCommand.parse(data);
+        LineProcessor processor = new LineProcessor();
+        processor.process(canvas, command);
+
+        char[][] expectedCanvas = new char[4][7];
+        org.junit.Assert.assertArrayEquals(canvas, expectedCanvas);
+    }
+
+    @Test
+    public void shouldFailIsYDataOverflow() {
+        char[][] canvas = new char[4][7];
+        String[] data = new String[] {"L", "6", "3", "6", "5"};
+        LineCommand command = LineCommand.parse(data);
+        LineProcessor processor = new LineProcessor();
+        processor.process(canvas, command);
+
+        char[][] expectedCanvas = new char[4][7];
+        org.junit.Assert.assertArrayEquals(canvas, expectedCanvas);
+    }
 }
