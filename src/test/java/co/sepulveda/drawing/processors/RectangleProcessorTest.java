@@ -59,4 +59,28 @@ public class RectangleProcessorTest {
         expectedCanvas = new char[5][8];
         org.junit.Assert.assertArrayEquals(canvas, expectedCanvas);
     }
+
+    @Test
+    public void shouldFailIsXDataOverflow() {
+        char[][] canvas = new char[5][8];
+        String[] data = new String[] {"R", "3", "2", "9", "4"};
+        RectangleCommand command = RectangleCommand.parse(data);
+        RectangleProcessor processor = new RectangleProcessor();
+        processor.process(canvas, command);
+
+        char[][] expectedCanvas = new char[5][8];
+        org.junit.Assert.assertArrayEquals(canvas, expectedCanvas);
+    }
+
+    @Test
+    public void shouldFailIsYDataOverflow() {
+        char[][] canvas = new char[5][8];
+        String[] data = new String[] {"R", "3", "2", "6", "7"};
+        RectangleCommand command = RectangleCommand.parse(data);
+        RectangleProcessor processor = new RectangleProcessor();
+        processor.process(canvas, command);
+
+        char[][] expectedCanvas = new char[5][8];
+        org.junit.Assert.assertArrayEquals(canvas, expectedCanvas);
+    }
 }
