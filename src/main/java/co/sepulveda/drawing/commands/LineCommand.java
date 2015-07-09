@@ -44,7 +44,15 @@ public class LineCommand extends Command {
     }
 
     public boolean isHorizontalOrVertical() {
-        return x1 == x2 || y1 == y2;
+        return isHorizontal() || isVertical();
+    }
+
+    public boolean isHorizontal() {
+        return y1 == y2;
+    }
+
+    public boolean isVertical() {
+        return x1 == x2;
     }
 
     public static LineCommand parse(String[] data) {
