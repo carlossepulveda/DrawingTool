@@ -1,8 +1,14 @@
 package co.sepulveda.drawing;
 
+import co.sepulveda.drawing.commands.BucketCommand;
 import co.sepulveda.drawing.commands.Command;
 import co.sepulveda.drawing.commands.CommandsParser;
 import co.sepulveda.drawing.commands.CreateCommand;
+import co.sepulveda.drawing.commands.LineCommand;
+import co.sepulveda.drawing.commands.RectangleCommand;
+import co.sepulveda.drawing.processors.BucketProcessor;
+import co.sepulveda.drawing.processors.LineProcessor;
+import co.sepulveda.drawing.processors.RectangleProcessor;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -50,13 +56,13 @@ public class Painter {
         CreateCommand createCommand = (CreateCommand) firstCommand;
         int width = createCommand.getWidth();
         int height = createCommand.getHeight();
-        Canvas canvas = new Canvas(width, height);
+        char[][] canvas = new char[height][width];
         logger.log(Level.INFO, "New canvas : width {0},  height {1}", new Object[]{width, height});
 
         processCommands(canvas, commands);
     }
 
-    private void processCommands(Canvas canvas, List<String> commands) {
+    private void processCommands(char[][] canvas, List<String> commands) {
         CommandsParser commandParser = new CommandsParser();
         OutPrinter printer = new OutPrinter();
         for (int i = 1; i < commands.size(); i++) {
@@ -68,11 +74,27 @@ public class Painter {
         printer.close();
     }
 
-    private void processCommand(Canvas canvas, Command command, OutPrinter printer) {
+    private void processCommand(char[][] canvas, Command command, OutPrinter printer) {
         logger.log(Level.INFO, "Processing command : {0}", command.toString());
-        canvas.execute(command);
-        char[][] canvasData = canvas.getData();
-        printer.print(canvasData);
+        if (command instanceof LineCommand) {
+            LineCommand lineCommand = (LineCommand) command;
+            LineProcessor lineProcessor = new LineProcessor();
+            lineProcessor.process(canvas, lineCommand);
+        }
+
+        if (command instanceof RectangleCommand) {
+            RectangleCommand rectangleCommand = (RectangleCommand) command;
+            RectangleProcessor rectangleProcessor = new RectangleProcessor();
+            rectangleProcessor.process(canvas, rectangleCommand);
+        }
+
+        if (command instanceof BucketCommand) {
+            BucketCommand bucketCommand = (BucketCommand) command;
+            BucketProcessor bucketProcessor = new BucketProcessor();
+            bucketProcessor.process(canvas, bucketCommand);
+        }
+
+        printer.print(canvas);
     }
 
     private boolean isEmpty(List commands) {
