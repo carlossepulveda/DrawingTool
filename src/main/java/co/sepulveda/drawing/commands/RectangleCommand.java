@@ -43,6 +43,10 @@ public class RectangleCommand extends Command {
         return y2;
     }
 
+    public boolean isValidRectangle() {
+        return x1 < x2 && y1 < y2;
+    }
+
     public static RectangleCommand parse(String[] data) {
         if (!data[0].equals(KEY)) {
             return null;
