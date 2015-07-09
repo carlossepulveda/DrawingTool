@@ -20,7 +20,18 @@ public class RectangleProcessor {
             return;
         }
 
+        int x = command.getX2();
+        int y = command.getY2();
+        if (isDataGreaterCanvas(x, y, canvas)) {
+            logger.log(Level.SEVERE, "Invalid coors");
+            return;
+        }
+
         processRectangle(canvas, command);
+    }
+
+    private boolean isDataGreaterCanvas(int x, int y, char[][] canvas) {
+        return x > canvas[0].length || y > canvas.length;
     }
 
     private void processRectangle(char[][] canvas, RectangleCommand command) {
