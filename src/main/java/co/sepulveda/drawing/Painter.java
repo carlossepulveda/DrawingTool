@@ -1,5 +1,6 @@
 package co.sepulveda.drawing;
 
+import co.sepulveda.drawing.printing.OutputPrinter;
 import co.sepulveda.drawing.commands.BucketCommand;
 import co.sepulveda.drawing.commands.Command;
 import co.sepulveda.drawing.commands.CommandsParser;
@@ -57,24 +58,24 @@ public class Painter {
         int width = createCommand.getWidth();
         int height = createCommand.getHeight();
         char[][] canvas = new char[height][width];
+        OutputPrinter printer = new OutputPrinter();
+        printer.print(canvas);
         logger.log(Level.INFO, "New canvas : width {0},  height {1}", new Object[]{width, height});
 
-        processCommands(canvas, commands);
+        processCommands(canvas, commands, printer);
+        printer.save();
     }
 
-    private void processCommands(char[][] canvas, List<String> commands) {
+    private void processCommands(char[][] canvas, List<String> commands, OutputPrinter printer) {
         CommandsParser commandParser = new CommandsParser();
-        OutPrinter printer = new OutPrinter();
         for (int i = 1; i < commands.size(); i++) {
             String commandLine = commands.get(i);
             Command command = commandParser.parse(commandLine);
             processCommand(canvas, command, printer);
         }
-
-        printer.close();
     }
 
-    private void processCommand(char[][] canvas, Command command, OutPrinter printer) {
+    private void processCommand(char[][] canvas, Command command, OutputPrinter printer) {
         logger.log(Level.INFO, "Processing command : {0}", command.toString());
         if (command instanceof LineCommand) {
             LineCommand lineCommand = (LineCommand) command;
