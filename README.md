@@ -29,4 +29,4 @@ which it is responsible of validate and execute the command. After executing eac
 Java 8.
 
 You can execute the jar file (DrawingTool-1.0.jar) and to specify the input file path (java -jar DrawingTool-1.0.jar someinput.txt) 
-otherwise the input file it will be assumed as "input.txt" after of execution, an output file will be generated.
+otherwise the input file it will be assumed as "input.txt". After of execution, an output file will be generated.
